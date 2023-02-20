@@ -24,6 +24,8 @@ let timerEl = document.querySelector("#time");
 // variables to keep track of quiz state
 //variable for the index for the current question, will need this to increase the index of the questions
 
+let questionIndex = 0; 
+
 //time variable to set the initial time a player will start with
 
 let time = 60; // sets time to 60 seconds 
@@ -56,22 +58,34 @@ let timerInt // undefined
     
   //call the function to get the questions
 
-//   getQuestions()
+  getQuestions()
 
   }
 
 
-
-  
-
-
-
-  
-
-  
-
-
 //create a function to get the questions
+
+  function getQuestions() {
+
+    let currentQuestion = questions[questionIndex];
+
+    let questionsTitle = document.querySelector("#question-title");
+    questionsTitle.textContent=currentQuestion.Title;
+
+    let choicesEl = document.querySelector("#choices");
+    
+    choicesEl.textContent=" ";
+
+    currentQuestion.Choices.forEach(function(choice){
+        let choiceBtn = document.createElement("button");
+        choiceBtn.setAttribute("class","choice");
+        choiceBtn.textContent=choice;
+        // choiceBtn.addEventListener("click",choiceClick);
+        choicesEl.appendChild(choiceBtn);
+    })
+
+  }
+
   //get current question object from array
   
   //clear out any old question choices
@@ -122,7 +136,7 @@ let timerInt // undefined
     //hide questions section
 
     questionsEl.setAttribute("class","hide");
-    
+
   }
 
  
