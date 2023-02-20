@@ -21,6 +21,8 @@ let timerEl = document.querySelector("#time");
 
 //feedback element
 
+let feedbackEl = document.querySelector("#feedback");
+
 // variables to keep track of quiz state
 //variable for the index for the current question, will need this to increase the index of the questions
 
@@ -67,6 +69,7 @@ let timerInt // undefined
 
   function getQuestions() {
 
+    //get current question object from array
     let currentQuestion = questions[questionIndex];
 
     let questionsTitle = document.querySelector("#question-title");
@@ -74,33 +77,61 @@ let timerInt // undefined
 
     let choicesEl = document.querySelector("#choices");
     
+    //clear out any old question choices
     choicesEl.textContent=" ";
-
+    
+    //loop over choices
     currentQuestion.Choices.forEach(function(choice){
+        //create new button for each choice
         let choiceBtn = document.createElement("button");
+        //set a class of choice for each choice
         choiceBtn.setAttribute("class","choice");
+        choiceBtn.setAttribute("value",choice);
+        //add a text content of the choices value    
         choiceBtn.textContent=choice;
-        // choiceBtn.addEventListener("click",choiceClick);
+        //attach a click event to each choice
+        choiceBtn.addEventListener("click",choiceClick);
+        //display on the page
         choicesEl.appendChild(choiceBtn);
+        
     })
 
   }
+    
+ function choiceClick() {
 
-  //get current question object from array
-  
-  //clear out any old question choices
+    if (this.value !== questions[questionIndex].Answer) {
+        // wrong answer
+        time -= 15; // same as time = time - 15
+        if (time < 0) {
+            time = 0;
+        }
+        timerEl.textContent = time+" Seconds";
+        feedbackEl.textContent="Wrong Choice";
+    } else {
+        feedbackEl.textContent="Your Right!";
+    }
 
-  //loop over choices
+    feedbackEl.removeAttribute("class","hide");
 
-    //create new button for each choice
+    setTimeout(() => {
+        feedbackEl.setAttribute("class","hide");
+    }, 1500);
 
-    //set a class of choice for each choice
+    questionIndex ++;
 
-    //add a text content of the choices value 
+    if (questionIndex === questions.length) {
+        endQuiz();
+    } else {
+        getQuestions();
+    }
+    
+ }
+     
 
-    //attach a click event to each choice
+    
 
-    //display on the page
+    
 
 
 //create a function to compare the question that was clicked to the answer of the question
