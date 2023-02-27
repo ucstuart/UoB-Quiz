@@ -7,6 +7,8 @@ let questionsEl = document.querySelector("#questions");
 
 //submit button
 
+let submitBtn = document.querySelector("#submit");
+
 //start button
 
 let startBtn = document.querySelector("#start");
@@ -18,6 +20,8 @@ let timerEl = document.querySelector("#time");
 
 
 //initials element
+
+let initalsEl = document.querySelector("#initials");
 
 //feedback element
 
@@ -128,12 +132,6 @@ let timerInt // undefined
     
  }
      
-
-    
-
-    
-
-
 //create a function to compare the question that was clicked to the answer of the question
   //check if user guessed wrong by comparing the value of the choice to the the answer
   //if the question is wrong, take 10 seconds off the timer
@@ -170,16 +168,28 @@ let timerInt // undefined
 
   }
 
- 
-
- 
-
-  
-
-  
 
 //create a function to save the scores
   //get value of the initials input
+
+function saveScore () {
+  var initials = initalsEl.value.trim(); // trim removes the spaces e.g. s r becomes sr
+  if (initials !== "") {
+    var highscores = JSON.parse(localStorage.getItem("highScores")) || []; // || or do this
+
+    var newScore = {
+      scoreKey: time,
+      initials: initials
+    };
+
+    highscores.push(newScore);
+
+    localStorage.setItem("highscores", JSON.stringify(highscores));
+
+    window.location.href="/highscores.html";
+
+  }
+}
 
   //check to make sure the value isn't empty
     //get saved scores from localstorage, or if there are none, set to an empty array
@@ -195,3 +205,6 @@ let timerInt // undefined
 startBtn.addEventListener("click", startQuiz);
 
 //add click event to the submit button to the function that saves the score
+
+submitBtn.addEventListener("click", saveScore);
+
