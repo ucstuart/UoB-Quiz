@@ -175,7 +175,7 @@ let timerInt // undefined
 function saveScore () {
   var initials = initalsEl.value.trim(); // trim removes the spaces e.g. s r becomes sr
   if (initials !== "") {
-    var highscores = JSON.parse(localStorage.getItem("highScores")) || []; // || or do this
+    var highscores = JSON.parse(localStorage.getItem("highscores")) || []; // || or do this
 
     var newScore = {
       scoreKey: time,
